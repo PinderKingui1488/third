@@ -38,3 +38,13 @@ if __name__ == "__main__":
     test_price_setter_getter()
     test_category_creation()
     test_add_product_to_category()
+
+
+    def test_str(category, Sacred_Relic):
+        assert str(Sacred_Relic) == " Radiance, 3400. Остаток: 4 шт."
+        assert str(category) == "айтемы, количество продуктов: 3 шт."
+
+
+    def test_add(Sacred_Relic):
+        product = Product.new_product({"name": "name1", "description": "-", "price": 140, "quantity": 3})
+        assert Sacred_Relic + product == 442
