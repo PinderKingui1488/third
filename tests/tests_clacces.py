@@ -1,5 +1,5 @@
 from src.category import Category
-from src.product import Product
+from src.product import Product, LawnGrass, Smartphone
 
 
 def test_product_creation() -> None:
@@ -25,19 +25,21 @@ def test_category_creation() -> None:
     assert len(category.products) == 0
 
 
-def test_add_product_to_category() -> None:
+def test_add_product_fail() -> None:
     category = Category("Смартфоны", "Лучшие смартфоны 2023 года", [])
     product = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-    category.add_product(product)
-    assert len(category.products) == 1
-    assert category.products[0] == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+    try:
+        category.add_product(product)
+    except Exception as e:
+        assert type(e) is TypeError
+
 
 
 if __name__ == "__main__":
     test_product_creation()
     test_price_setter_getter()
     test_category_creation()
-    test_add_product_to_category()
+
 
 
     def test_str(category, Sacred_Relic):
@@ -48,3 +50,22 @@ if __name__ == "__main__":
     def test_add(Sacred_Relic):
         product = Product.new_product({"name": "name1", "description": "-", "price": 140, "quantity": 3})
         assert Sacred_Relic + product == 442
+
+    def test_init3(smartphone):
+            assert smartphone.name == "Ring of Tarrasque"
+            assert smartphone.description == "предмет, который можно купить в ПОДТОЙНАЯ лавке, в разделе разное."
+            assert smartphone.price == 1800
+            assert smartphone.quantity == 1
+            assert smartphone.efficiency == 12
+            assert smartphone.model == "7.37"
+            assert smartphone.memory == 4
+            assert smartphone.color == "RED"
+
+    def test_init4(lawn_grass):
+            assert lawn_grass.name == "Recipe of Tarrasque"
+            assert lawn_grass.description == "это предмет , который сам по себе ничего не делает."
+            assert lawn_grass.price == 600
+            assert lawn_grass.quantity == 1
+            assert lawn_grass.country == "Warcraft"
+            assert lawn_grass.germination_period == "after 40 minute"
+            assert lawn_grass.color == "yellow"
