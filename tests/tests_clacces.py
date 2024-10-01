@@ -51,7 +51,7 @@ if __name__ == "__main__":
         product = Product.new_product({"name": "name1", "description": "-", "price": 140, "quantity": 3})
         assert Sacred_Relic + product == 442
 
-    def test_init3(smartphone):
+    def test_smartphone(smartphone: Smartphone) -> None:
             assert smartphone.name == "Ring of Tarrasque"
             assert smartphone.description == "предмет, который можно купить в ПОДТОЙНАЯ лавке, в разделе разное."
             assert smartphone.price == 1800
@@ -61,11 +61,11 @@ if __name__ == "__main__":
             assert smartphone.memory == 4
             assert smartphone.color == "RED"
 
-    def test_init4(lawn_grass):
-            assert lawn_grass.name == "Recipe of Tarrasque"
-            assert lawn_grass.description == "это предмет , который сам по себе ничего не делает."
-            assert lawn_grass.price == 600
-            assert lawn_grass.quantity == 1
-            assert lawn_grass.country == "Warcraft"
-            assert lawn_grass.germination_period == "after 40 minute"
-            assert lawn_grass.color == "yellow"
+    def test_lawngrass(lawngrass: LawnGrass) -> None:
+            assert lawngrass.name == "Recipe of Tarrasque"
+            assert lawngrass.description == "это предмет , который сам по себе ничего не делает."
+            assert lawngrass.price == 600
+            assert lawngrass.quantity == 1
+            assert lawngrass.country == "Warcraft"
+            assert lawngrass.germination_period == "after 40 minute"
+            assert lawngrass.color == "yellow"

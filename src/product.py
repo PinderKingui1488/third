@@ -10,11 +10,16 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other):
-        return self.price + self.quantity + other.price * other.quantity
+    def __add__(self, other: "Product") -> float:
+        if type(self) == type(other):
+            return self.price * self.quantity + other.price * other.quantity
+        else:
+            raise TypeError("Неа")
+
+
 
     @property
     def price(self):
