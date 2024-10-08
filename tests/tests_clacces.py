@@ -1,5 +1,6 @@
+import pytest
 from src.category import Category
-from src.product import Product, LawnGrass, Smartphone
+from src.product import Product, LawnGrass, Smartphone, BaseProduct
 
 
 def test_product_creation() -> None:
@@ -34,18 +35,15 @@ def test_add_product_fail() -> None:
         assert type(e) is TypeError
 
 
-
 if __name__ == "__main__":
     test_product_creation()
     test_price_setter_getter()
     test_category_creation()
 
 
-
     def test_str(category, Sacred_Relic):
         assert str(Sacred_Relic) == " Radiance, 3400. Остаток: 4 шт."
         assert str(category) == "айтемы, количество продуктов: 3 шт."
-
 
     def test_add(Sacred_Relic):
         product = Product.new_product({"name": "name1", "description": "-", "price": 140, "quantity": 3})
@@ -69,3 +67,8 @@ if __name__ == "__main__":
             assert lawngrass.country == "Warcraft"
             assert lawngrass.germination_period == "after 40 minute"
             assert lawngrass.color == "yellow"
+
+
+def test_abstract_class() -> None:
+    with pytest.raises(TypeError):
+        prod = BaseProduct()
