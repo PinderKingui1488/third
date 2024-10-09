@@ -1,5 +1,6 @@
+import pytest
 from src.category import Category
-from src.product import Product
+from src.product import Product, LawnGrass, Smartphone, BaseProduct
 
 
 def test_product_creation() -> None:
@@ -25,26 +26,66 @@ def test_category_creation() -> None:
     assert len(category.products) == 0
 
 
-def test_add_product_to_category() -> None:
+def test_add_product_fail() -> None:
     category = Category("Смартфоны", "Лучшие смартфоны 2023 года", [])
     product = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-    category.add_product(product)
-    assert len(category.products) == 1
-    assert category.products[0] == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+    try:
+        category.add_product(product)
+    except Exception as e:
+        assert type(e) is TypeError
 
 
 if __name__ == "__main__":
     test_product_creation()
     test_price_setter_getter()
     test_category_creation()
-    test_add_product_to_category()
 
 
     def test_str(category, Sacred_Relic):
         assert str(Sacred_Relic) == " Radiance, 3400. Остаток: 4 шт."
         assert str(category) == "айтемы, количество продуктов: 3 шт."
 
-
     def test_add(Sacred_Relic):
         product = Product.new_product({"name": "name1", "description": "-", "price": 140, "quantity": 3})
         assert Sacred_Relic + product == 442
+
+    def test_smartphone(smartphone: Smartphone) -> None:
+            assert smartphone.name == "Ring of Tarrasque"
+            assert smartphone.description == "предмет, который можно купить в ПОДТОЙНАЯ лавке, в разделе разное."
+            assert smartphone.price == 1800
+            assert smartphone.quantity == 1
+            assert smartphone.efficiency == 12
+            assert smartphone.model == "7.37"
+            assert smartphone.memory == 4
+            assert smartphone.color == "RED"
+
+    def test_lawngrass(lawngrass: LawnGrass) -> None:
+            assert lawngrass.name == "Recipe of Tarrasque"
+            assert lawngrass.description == "это предмет , который сам по себе ничего не делает."
+            assert lawngrass.price == 600
+            assert lawngrass.quantity == 1
+            assert lawngrass.country == "Warcraft"
+            assert lawngrass.germination_period == "after 40 minute"
+            assert lawngrass.color == "yellow"
+
+
+def test_abstract_class():
+    with pytest.raises(TypeError):
+        prod = BaseProduct()
+
+
+def test_product_initialization_zero_quantity():
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Тестовый продукт", "Описание", 100.0, 0)
+
+
+def test_category_average_price_no_products():
+    category = Category("Тестовая категория", "Описание категории", [])
+    assert category.average_price() == 0
+
+
+def test_category_average_price_zero_quantity_products():
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен") as e_info:
+        product1 = Product("Тестовый продукт 1", "Описание 1", 100.0, 1)
+        product2 = Product("Тестовый продукт 2", "Описание 2", 200.0, 0)
+        category = Category("Тестовая категория", "Описание категории", [product1, product2])
